@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { UserProvider, useUser } from './UserContext';
 
-function App() {
+const LoggedInUser = () => {
+  const { user } = useUser();
+  console.log(user)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <p>
+      Hello, <strong>{user.name}</strong>!
+    </p>
+  );
+}
+
+const Header = () => {
+  return (
+    <header>
+      <h2>Blog App</h2>
+      <LoggedInUser />
+    </header>
+  );
+}
+
+const Page = () => {
+  const { user } = useUser();
+  return (
+    <div>
+      <h2>What is Lorem ipsum?</h2>
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+        Atque cupiditate non necessitatibus, eum aut a quisquam quibusdam quidem.
+        Ullam consequuntur nisi repellat maxime ipsa eius laudantium praesentium.
+        Ex esse on necessitatibus, eum aut a quisquam corporis!
+      </p>
+      <p>Written by <strong>{user.name}</strong></p>
     </div>
   );
 }
 
-export default App;
+function App() {
+  return (
+    <div>
+      <Header />
+      <Page />
+    </div>
+  );
+}
+
+function Root() {
+  return (
+    <UserProvider>
+      <App />
+    </UserProvider>
+  );
+}
+
+export default Root;
